@@ -40,3 +40,20 @@ stages:
         command: 'buildAndPush'
         Dockerfile: 'worker/Dockerfile'
         tags: '$(tag)'
+- stage: Update 
+  displayName: Update 
+  jobs:
+  - job: Update
+    displayName: Update 
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - script: sed -i 's/\r$//' scripts/updateK8sManifests.sh
+        displayName: Convert script to LF
+      - task: ShellScript@2
+        displayName: Update
+        inputs:
+          scriptPath: 'scripts/updateK8sManifests.sh'
+          args: 'worker $(containerRegistry) $(imageRepository) $(tag)'
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
