@@ -3,10 +3,10 @@
 set -x
 
 # Set the repository URL
-REPO_URL="https://${SYSTEM_ACCESSTOKEN}@dev.azure.com/rahulraval/voting-app/_git/voting-app"
+REPO_URL="https://dev.azure.com/rahulraval/voting-app/_git/voting-app"
 
 # Clone the git repository into the /tmp directory
-git clone "$REPO_URL" /tmp/temp_repo
+git -c http.extraheader="AUTHORIZATION: bearer ${SYSTEM_ACCESSTOKEN}" clone "$REPO_URL" /tmp/temp_repo
 
 # Navigate into the cloned repository directory
 cd /tmp/temp_repo
