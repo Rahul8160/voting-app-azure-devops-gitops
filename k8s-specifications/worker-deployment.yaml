@@ -15,7 +15,7 @@ spec:
         app: worker
     spec:
       containers:
-      - image: dockersamples/examplevotingapp_worker
+      - image: rahulazurecicd.azurecr.io/workerservice:18
         name: worker
       imagePullSecrets:
       - name: acr-secret
