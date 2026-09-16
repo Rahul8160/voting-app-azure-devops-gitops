@@ -38,3 +38,18 @@ stages:
         command: 'buildAndPush'
         Dockerfile: 'vote/Dockerfile'
         tags: '$(tag)'
+- stage: Update 
+  displayName: Update 
+  jobs:
+  - job: Update
+    displayName: Update 
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: ShellScript@2
+      displayName: Update
+      inputs:
+        scriptPath: 'scripts/updateK8sManifests.sh'
+        args: 'vote $(containerRegistry) $(imageRepository) $(tag)'
+      env:
+        AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
