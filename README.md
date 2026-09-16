@@ -251,27 +251,6 @@ Issues actually hit while building this pipeline, and how they were resolved.
   ```
 - **Why:** this is commit _metadata_, unrelated to authentication — it has to be set every run because the agent doesn't persist state between runs.
 
-### 3. Git push fails with HTTP 403
-
-- **Symptom:** `TF401027: You need the Git 'GenericContribute' permission`
-- **Cause:** The pipeline can authenticate (clone succeeds) but the Build Service identity isn't authorized to write to the repo.
-- **Fix:** Grant **Contribute** permission to the Azure DevOps Build Service identity at the repository level.
-- **Why clone works but push doesn't:** authentication and authorization are separate checks. `System.AccessToken` proves _who_ the pipeline is; Contribute permission determines _what_ that identity can do. Cloning only needs read access.
-
-### 4. GitHub CLI hangs in Git Bash (MinTTY)
-
-- **Symptom:** `You appear to be running in MinTTY without pseudo terminal support.`
-- **Cause:** Git Bash uses MinTTY, which doesn't support the pseudo-terminal that interactive `gh` commands expect.
-- **Fix:** Prefix the command with `winpty`:
-  ```bash
-  winpty gh auth login
-  # or
-  winpty gh auth login --hostname github.com --git-protocol https --web
-  ```
-- **Note:** only relevant for interactive GitHub CLI auth run from Git Bash specifically — other terminals (PowerShell, WSL) aren't affected.
-
----
-
 ## Local Development
 
 ```bash
