@@ -53,3 +53,5 @@ stages:
         inputs:
           scriptPath: 'scripts/updateK8sManifests.sh'
           args: 'vote $(containerRegistry) $(imageRepository) $(tag)'
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
