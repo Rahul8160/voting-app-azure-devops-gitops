@@ -15,13 +15,13 @@ cd /tmp/temp_repo
 # For example, let's say you want to change the image tag in a deployment.yaml file
 sed -i "s|image:.*|image: $2/$3:$4|g" k8s-specifications/$1-deployment.yaml
 
-# Add the modified files
 git add .
 
-# Commit the changes
+git config user.name "Azure Pipelines"
+git config user.email "azure-pipelines@local"
+
 git commit -m "Update Kubernetes manifest"
 
-# Push the changes back to the repository
 git push
 
 # Cleanup: remove the temporary directory
