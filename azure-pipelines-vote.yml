@@ -52,4 +52,4 @@ stages:
         scriptPath: 'scripts/updateK8sManifests.sh'
         args: 'vote $(containerRegistry) $(imageRepository) $(tag)'
       env:
-        AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
