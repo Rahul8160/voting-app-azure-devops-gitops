@@ -46,10 +46,12 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: ShellScript@2
-      displayName: Update
-      inputs:
-        scriptPath: 'scripts/updateK8sManifests.sh'
-        args: 'vote $(containerRegistry) $(imageRepository) $(tag)'
-      env:
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      - script: sed -i 's/\r$//' scripts/updateK8sManifests.sh
+        displayName: Convert script to LF
+      - task: ShellScript@2
+        displayName: Update
+        inputs:
+          scriptPath: 'scripts/updateK8sManifests.sh'
+          args: 'vote $(containerRegistry) $(imageRepository) $(tag)'
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
